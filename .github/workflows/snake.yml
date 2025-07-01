@@ -2,17 +2,18 @@ name: Generate Snake Animation
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Runs every day at midnight
-  workflow_dispatch:
+    - cron: "0 0 * * *" # Every day at midnight UTC
+  workflow_dispatch: # Allow manual trigger from Actions tab
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Generate Snake Animation
+      - name: Generate Snake SVG and GIF
         uses: Platane/snk@v3
         with:
           github_user_name: waqas-rashid1
@@ -21,7 +22,7 @@ jobs:
             dist/github-contribution-grid-snake-dark.svg
             dist/github-contribution-grid-snake-ocean.gif
 
-      - name: Push Snake Animation to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
